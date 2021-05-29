@@ -1,0 +1,53 @@
+version: "3"
+services:
+  db:
+    image: postgres:12.5
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+  api:
+    build:
+      context: ./api/
+      dockerfile: Dockerfile
+    tty: true
+    stdin_open: true
+    command: /bin/sh -c "rm -f /myapp/tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    image: rails:dev
+    volumes:
+      - ./api:/myapp
+      - ./api/vendor/bundle:/myapp/vendor/bundle
+      - ./api/vendor/node_modules:/myapp/vendor/node_modules
+    environment:
+      TZ: Asia/Tokyo
+      RAILS_ENV: development
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+  front:
+    build:
+      context: ./front/
+      dockerfile: Dockerfile
+    volumes:
+      - ./front:/usr/src/app
+    command: sh -c "cd react-app && npm run dev"
+    ports:
+      - "8000:3000"
+  proxy:
+    image: nginx
+    container_name: nginx
+    ports:
+      - 1000:80
+    volumes:
+      - ./front/react-app/build:/var/www
+      - ./proxy/:/etc/nginx/conf.d/
+    depends_on:
+      - front
+    links:
+      - front
+volumes:
+  postgres-data:
+    driver: local
+  bundle:
+  node_modules:
