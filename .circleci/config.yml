@@ -40,7 +40,6 @@ jobs:
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "Gemfile.lock" }}
-            # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
       - run: gem install bundler -v 2.1.4
@@ -50,9 +49,9 @@ jobs:
             bundle config set path 'vendor/bundle' --jobs=4 --retry=3
 
       - save_cache:
+          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
           paths:
             - ./vendor/bundle
-          key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
       # ②ちょっと無理やりですが、database.ymlとdatabase.yml.ciを入れ替える記述です。
       - run: mv config/database.yml config/database.yml.ci
