@@ -41,6 +41,8 @@ jobs:
           keys:
             - v1-dependencies-{{ checksum "Gemfile.lock" }}
             - v1-dependencies-
+          paths:
+            - ./vendor/bundle
 
       - run: gem install bundler -v 2.1.4
       - run:
