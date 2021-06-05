@@ -47,7 +47,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            bundle install --jobs=4 --retry=3 bundle config set path 'vendor/bundle'
+            bundle install --jobs=4 --retry=3 config set path 'vendor/bundle'
 
       - save_cache:
           paths:
