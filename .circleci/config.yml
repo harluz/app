@@ -56,7 +56,7 @@ jobs:
             - ./vendor/bundle
 
       # Database setup
-      - run: cd ./api
+      - run: cd ~/portfolio/api
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
 
