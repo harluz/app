@@ -30,7 +30,10 @@ jobs:
 
     steps:
       - checkout
-
+      - run:
+          command: |
+            cd ./api
+            pwd
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -40,7 +43,6 @@ jobs:
             - ./vendor/bundle
 
       - run:
-          working_directory: api
           command: |
             pwd
             ls
