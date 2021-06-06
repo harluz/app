@@ -47,6 +47,7 @@ jobs:
             gem install bundler -v 2.1.4
 
       - run:
+          working_directory: api
           name: install dependencies
           command: |
             pwd
@@ -63,9 +64,8 @@ jobs:
       # - run: cd ~/portfolio/api
       # - run: mv ./config/database.yml.ci ./config/database.yml
       # Database setup
-      # - run: bundle install
-      - run: bundle exec rails db:create
-      - run: bundle exec rails db:schema:load
+      - run: bundle exec rake db:create
+      - run: bundle exec rake db:schema:load
 
       # rubocopを走らせる記述です。
       - run:
