@@ -39,24 +39,24 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "portfolio/api/Gemfile.lock" }}
+            - v1-dependencies-{{ checksum "./api/Gemfile.lock" }}
             - v1-dependencies-
           paths:
-            - portfolio/api/vendor/bundle
+            - ./api/vendor/bundle
 
       - run: gem install bundler -v 2.1.4
       - run:
           name: install dependencies
           command: |
-            bundle config set path 'portfolio/api/vendor/bundle' --jobs=4 --retry=3
+            bundle config set path './api/vendor/bundle' --jobs=4 --retry=3
 
       - save_cache:
-          key: v1-dependencies-{{ checksum "portfolio/api/Gemfile.lock" }}
+          key: v1-dependencies-{{ checksum "./api/Gemfile.lock" }}
           paths:
-            - portfolio/api/vendor/bundle
+            - ./api/vendor/bundle
 
       # ②ちょっと無理やりですが、database.ymlとdatabase.yml.ciを入れ替える記述です。
-      - run: mv portfolio/api/config/database.yml.ci portfolio/api/config/database.yml
+      - run: mv ./api/config/database.yml.ci ./api/config/database.yml
 
       # Database setup
       - run: bundle exec rake db:create
