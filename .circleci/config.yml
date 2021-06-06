@@ -56,8 +56,8 @@ jobs:
             - ./vendor/bundle
 
       # Database setup
-      - run: cd ~/portfolio/api
-      - run: bundle exec rake db:create
+      - run: cd /portfolio/api
+      - run: bundle exec rails db:create
       - run: bundle exec rake db:schema:load
 
       # rubocopを走らせる記述です。
