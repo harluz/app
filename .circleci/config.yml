@@ -29,35 +29,32 @@ jobs:
     
 
     steps:
-      - checkout:
-          path: ./api
-      # - run: cd ./api
+      - checkout
       # Download and cache dependencies
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "./api/Gemfile.lock" }}
             - v1-dependencies-
           paths:
-            - ./vendor/bundle
+            - ./api/vendor/bundle
 
       - run:
           name: install bundler
           command: |
-            pwd
-            ls
+            cd ./api
             gem install bundler -v 2.1.4
 
       - run:
-          name: install dependencies and moving file
+          name: install dependencies
           command: |
             cd ./api
-            bundle config set --local path './api/vendor/bundle' --jobs=4 --retry=3
+            bundle config set --local path './vendor/bundle' --jobs=4 --retry=3
             bundle install
 
       - save_cache:
           key: v1-dependencies-{{ checksum "./api/Gemfile.lock" }}
           paths:
-            - ./vendor/bundle
+            - ./api/vendor/bundle
 
       # Database setup
       # - run: cd ~/portfolio/api
@@ -78,7 +75,9 @@ jobs:
       # rubocopを走らせる記述です。
       - run:
           name: Rubocop
-          command: bundle exec rubocop
+          command: |
+            cd ./api
+            bundle exec rubocop
 
       # rspecを走らせる記述です。
       # run tests!
