@@ -48,7 +48,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            bundle config set path 'vendor/bundle' --jobs=4 --retry=3
+            bundle config set path './vendor/bundle' --jobs=4 --retry=3
 
       - save_cache:
           key: v1-dependencies-{{ checksum "~/portfolio/api/Gemfile.lock" }}
@@ -57,10 +57,11 @@ jobs:
 
       # Database setup
       - run: cd ~/portfolio/api
-      - run: mv ./config/database.yml.ci ./config/database.yml
+      # - run: mv ./config/database.yml.ci ./config/database.yml
       # Database setup
-      - run: bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+      - run: bundle install
+      - run: bundle exec rails db:create
+      - run: bundle exec rails db:schema:load
 
       # rubocopを走らせる記述です。
       - run:
