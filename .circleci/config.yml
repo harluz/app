@@ -10,19 +10,13 @@ jobs:
       # ruby2.5.1を使ったアプリのため
       - image: circleci/ruby:2.5.1-node-browsers
         environment:
-          #  ①注意！！ bundlerのバージョンが2.0.1以上だと、bundle installに失敗します。ここに環境として指定します。
-          - BUNDLER_VERSION: 2.1.4
-          #  ②注意！！ circleCIは仮想環境を構築するので、そのときに使うデータベースを指定する必要があります。
-          - RAILS_ENV: "test"
-            #自身の登録しているユーザに変える。
-            POSTGRES_USER: postgres
-            PGHOST: 127.0.0.1
-      # Mysqlのバージョン5.6で動かしていたため、5.6を指定
+          BUNDLER_VERSION: 2.1.4
+          RAILS_ENV: "test"
+          POSTGRES_USER: postgres
+          PGHOST: 127.0.0.1
       - image: circleci/postgres:12.5
         environment:
-          #それぞれ設定
           POSTGRES_USER: postgres
-          #下記を書けばパスワードなしでデータベースにログインしてくれる。
           POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_DB: myapp_test
 
@@ -40,7 +34,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "./Gemfile.lock" }}
+            - v1-dependencies-{{ checksum "./api/Gemfile.lock" }}
             - v1-dependencies-
           paths:
             - ./vendor/bundle
@@ -55,13 +49,13 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            bundle config set --local path './vendor/bundle' --jobs=4 --retry=3
-            bundle install
             pwd
             ls
+            bundle config set --local path './api/vendor/bundle' --jobs=4 --retry=3
+            bundle install
 
       - save_cache:
-          key: v1-dependencies-{{ checksum "./Gemfile.lock" }}
+          key: v1-dependencies-{{ checksum "./api/Gemfile.lock" }}
           paths:
             - ./vendor/bundle
 
