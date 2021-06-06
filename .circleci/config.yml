@@ -54,7 +54,6 @@ jobs:
           name: install dependencies
           command: |
             bundle config set path './vendor/bundle' --jobs=4 --retry=3
-            bundle binstubs --path=vendor/bin
             bundle install
 
       - save_cache:
