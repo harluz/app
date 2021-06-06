@@ -49,16 +49,13 @@ jobs:
           working_directory: api
           command: |
             gem install bundler -v 2.1.4
-            PWD
-            ls
+
       - run:
           name: install dependencies
           command: |
             bundle config set path './vendor/bundle' --jobs=4 --retry=3
             bundle binstubs --path=vendor/bin
             bundle install
-            PWD
-            ls
 
       - save_cache:
           key: v1-dependencies-{{ checksum "~/portfolio/api/Gemfile.lock" }}
