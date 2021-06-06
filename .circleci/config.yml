@@ -64,12 +64,16 @@ jobs:
       # - run: cd ~/portfolio/api
       # - run: mv ./config/database.yml.ci ./config/database.yml
       # Database setup
-      - run: 
+      - run:
+          working_directory: api
           command: |
             pwd
             ls
             bundle exec rake db:create
-      - run: bundle exec rake db:schema:load
+      - run:
+          working_directory: api
+          command: |
+            bundle exec rake db:schema:load
 
       # rubocopを走らせる記述です。
       - run:
