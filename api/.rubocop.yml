@@ -170,6 +170,16 @@ Style/FrozenStringLiteralComment:
     - "activestorage/db/update_migrate/**/*.rb"
     - "actionmailbox/db/migrate/**/*.rb"
     - "actiontext/db/migrate/**/*.rb"
+    - "bin/**"
+    - "config/**"
+    - "config/**/*.rb"
+    - "db/**"
+    - "db/migrate/**.rb"
+    - "spec/**"
+    - "spec/**/*.rb"
+    - "Gemfile"
+    - "Rakefile"
+    - "config.ru"
 
 Style/RedundantFreeze:
   Enabled: true
