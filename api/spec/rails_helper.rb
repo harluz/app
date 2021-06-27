@@ -1,6 +1,9 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require "spec_helper"
 require "capybara/rspec"
+
+# 下記コードは削除すること
+# require 'factory_bot'
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("../config/environment", __dir__)
 # Prevent database truncation if the environment is production
@@ -32,6 +35,9 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
+  # deviseのログインヘルパーを使用できるようにする(sign_inヘルパー)
+  config.include Devise::Test::IntegrationHelpers, type: :request
+
   # テスト中に、FactoryBot.create(:user) ではなく、create(:user) と書けるようになる。
   config.include FactoryBot::Syntax::Methods
 
@@ -47,6 +53,10 @@ RSpec.configure do |config|
     driven_by :selenium_chrome
   end
 
+  # 問題が解決したら削除すること
+  # config.before(:all) do
+  #   FactoryBot.reload
+  # end
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

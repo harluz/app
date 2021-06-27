@@ -13,7 +13,7 @@ DeviseTokenAuth.setup do |config|
   # determines how long tokens will remain valid after they are issued.
   # トークンの有効期限
   # デフォルトでは2週間
-  config.token_lifespan = 2.weeks
+  # config.token_lifespan = 2.weeks
 
   # Limiting the token_cost to just 4 in testing will increase the performance of
   # your test suite dramatically. The possible cost value is within range from 4
