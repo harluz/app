@@ -48,5 +48,14 @@ module Myapp
     end
 
     config.api_only = true
+
+    # RailsのAPIモードでセッションを有効にする
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use ActionDispatch::ContentSecurityPolicy::Middleware
+
+    # Specはwww.example.com というホスト名でテストが実行される
+    # Rails6 で追加された DNS リバインディング攻撃防止機能によりwww.example.comのホスト名がブロックされないようにするための設定
+    config.hosts << '.example.com'
   end
 end
