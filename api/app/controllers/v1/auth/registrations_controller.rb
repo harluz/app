@@ -17,7 +17,7 @@ class V1::Auth::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     @user = User.new(sign_up_params)
-    
+
     if @user.name.blank? || @user.email.blank? || @user.password.blank? || @user.password_confirmation.blank? || @user.password.length <= 6
       # 必須パラメータがかけているとき
       response_bad_request
@@ -88,12 +88,11 @@ class V1::Auth::RegistrationsController < Devise::RegistrationsController
   #   super(resource)
   # end
   private
+    def sign_up_params
+      params.require(:user).permit(:name, :image, :email, :password, :password_confirmation)
+    end
 
-  def sign_up_params
-    params.require(:user).permit(:name, :image, :email, :password, :password_confirmation)
-  end
-
-  def account_update_params
-    params.require(:user).permit(:name, :image, :email)
-  end
+    def account_update_params
+      params.require(:user).permit(:name, :image, :email)
+    end
 end

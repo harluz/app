@@ -56,6 +56,6 @@ module Myapp
 
     # Specはwww.example.com というホスト名でテストが実行される
     # Rails6 で追加された DNS リバインディング攻撃防止機能によりwww.example.comのホスト名がブロックされないようにするための設定
-    config.hosts << '.example.com'
+    config.hosts << ".example.com"
   end
 end

@@ -35,7 +35,6 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 RSpec.configure do |config|
-  
   # deviseのログインヘルパーを使用できるようにする(sign_inヘルパー)
   config.include Devise::Test::IntegrationHelpers, type: :request
 
